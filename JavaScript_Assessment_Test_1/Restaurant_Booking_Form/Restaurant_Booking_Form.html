@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Booking Form</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5 border border=black p-4 bg-secondary">
+        <h1 class="text-center">Restaurant Booking Form</h1>
+        <form id="bookingForm" class="mt-4">
+            <div class="row mb-3">
+                <!-- Choice of Booking -->
+                <div class="col-md-6">
+                    <label for="bookingChoice" class="form-label">Choice of Booking</label>
+                    <select id="bookingChoice" class="form-select">
+                        <option value="" selected disabled>Select Booking Type</option>
+                        <option value="full-day">Full Day Booking</option>
+                        <option value="half-day">Half Day Booking</option>
+                        <option value="hourly">Hourly Booking</option>
+                    </select>
+                </div>
+                <!-- User Name -->
+                <div class="col-md-6">
+                    <label for="userName" class="form-label">Name</label>
+                    <input type="text" id="userName" class="form-control" placeholder="Enter your name">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <!-- Mobile Number -->
+                <div class="col-md-6">
+                    <label for="mobileNumber" class="form-label">Mobile Number</label>
+                    <input type="text" id="mobileNumber" class="form-control" placeholder="Enter your mobile number">
+                </div>
+                <!-- Email -->
+                <div class="col-md-6">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="form-control" placeholder="Enter your email">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <!-- No of Persons -->
+                <div class="col-md-6">
+                    <label for="noOfPersons" class="form-label">No of Persons</label>
+                    <input type="number" id="noOfPersons" class="form-control" placeholder="Enter number of persons">
+                </div>
+                <!-- Date -->
+                <div id="dateField" class="col-md-6">
+                    <label for="bookingDate" class="form-label">Date</label>
+                    <input type="date" id="bookingDate" class="form-control">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <!-- Time -->
+                <div id="timeField" class="col-md-6 d-none">
+                    <label for="bookingTime" class="form-label">Time</label>
+                    <input type="time" id="bookingTime" class="form-control">
+                </div>
+                <!-- Slot -->
+                <div id="slotField" class="col-md-6 d-none">
+                    <label for="slotChoice" class="form-label">Slot</label>
+                    <select id="slotChoice" class="form-select">
+                        <option value="" selected disabled>Select Slot</option>
+                        <option value="breakfast">Breakfast</option>
+                        <option value="lunch">Lunch</option>
+                        <option value="dinner">Dinner</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="button" id="submitBtn" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const bookingChoice = document.getElementById('bookingChoice');
+            const dateField = document.getElementById('dateField');
+            const timeField = document.getElementById('timeField');
+            const slotField = document.getElementById('slotField');
+
+            bookingChoice.addEventListener('change', function () {
+                // Reset Date Time & Slot
+                dateField.classList.remove('d-none');
+                timeField.classList.add('d-none');
+                slotField.classList.add('d-none');
+
+                // Handle choice
+                if (this.value === 'full-day') {
+                    timeField.classList.add('d-none');
+                    slotField.classList.add('d-none');
+                } else if (this.value === 'half-day') {
+                    slotField.classList.remove('d-none');
+                    timeField.classList.add('d-none');
+                } else if (this.value === 'hourly') {
+                    timeField.classList.remove('d-none');
+                    slotField.classList.add('d-none');
+                }
+            });
+
+            document.getElementById('submitBtn').addEventListener('click', function () {
+                const userName = document.getElementById('userName').value;
+                const mobileNumber = document.getElementById('mobileNumber').value;
+                const email = document.getElementById('email').value;
+                const noOfPersons = document.getElementById('noOfPersons').value;
+                const bookingDate = document.getElementById('bookingDate').value;
+                const bookingTime = document.getElementById('bookingTime').value || 'N/A';
+                const slotChoice = document.getElementById('slotChoice').value || 'N/A';
+
+                if (!userName || !mobileNumber || !email || !noOfPersons || !bookingDate) {
+                    alert('Please fill all required fields.');
+                    return;
+                }
+
+                alert(`Booking Details:\n
+                    Name: ${userName}\n
+                    Mobile: ${mobileNumber}\n
+                    Email: ${email}\n
+                    No of Persons: ${noOfPersons}\n
+                    Date: ${bookingDate}\n
+                    Time: ${bookingTime}\n
+                    Slot: ${slotChoice}
+                `);
+            });
+        });
+    </script>
+</body>
+</html>
